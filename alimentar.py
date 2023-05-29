@@ -44,7 +44,6 @@ def alimentar():
                     continue
         else:
            print("Nao alimentando...")
-           continue
         if total == 0:
             print("\nSem... Forças....")
             time.sleep(2)
