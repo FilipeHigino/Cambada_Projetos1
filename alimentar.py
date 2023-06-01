@@ -3,47 +3,77 @@ import time
 os.system("cls")
 
 def alimentar():
-    #arquivo = open("fome.txt","rt+") #, "UTF-8"
+    alimentar = open("alimentar.txt", "a+")
+    #alimentar.seek(0)
     total = 100
     while True:
+        alimentar.readline()
         time.sleep(2)
         decorrer = total - 25
-        if decorrer<total:
+        if decorrer < total:
             total = decorrer
-            if total >=100:
+            if total >= 100:
                 total = 100
                 decorrer = total
+        alimentar.write(str(total))
+        alimentar.seek(0)
         print(total)
-        alimentar = int(input("Aumentando fome... Alimentar? [0 - NÃO / 1 - SIM]:  "))
-        if alimentar == 1:
-            opcao = int(input("""Digite a opção desejada:
+        try:
+            alimentar_input = int(input("Aumentando fome... Alimentar? [0 - NÃO / 1 - SIM]: "))
+        except ValueError:
+            print("Entrada inválida. Digite 0 para NÃO ou 1 para SIM.")
+            continue
+        
+        if alimentar_input == 1:
+            try:
+                opcao = int(input("""Digite a opção desejada:
                     [1] - Cuscuz (+10)
                     [2] - Tapioca (+25)
                     [3] - Bolo de Rolo (+50)    
                 """))
+            except ValueError:
+                print("Opção inválida. Digite um número válido.")
+                continue
+            
             if opcao == 1:
                 print("Cuscuz diminui 10 de fome")
-                cuscuz = int(input("Deseja dar Cuscuz? [0 - NÃO / 1 - SIM]: "))
-                if cuscuz== 1:
-                    total+=10
+                try:
+                    cuscuz = int(input("Deseja dar Cuscuz? [0 - NÃO / 1 - SIM]: "))
+                except ValueError:
+                    print("Entrada inválida. Digite 0 para NÃO ou 1 para SIM.")
+                    continue
+                    
+                if cuscuz == 1:
+                    total += 10
                 else:
                     continue
             elif opcao == 2:
                 print("Tapioca diminui 25 de fome")
-                tapioca = int(input("Deseja dar Tapioca? [0 - NÃO / 1 - SIM]: "))
+                try:
+                    tapioca = int(input("Deseja dar Tapioca? [0 - NÃO / 1 - SIM]: "))
+                except ValueError:
+                    print("Entrada inválida. Digite 0 para NÃO ou 1 para SIM.")
+                    continue
+                    
                 if tapioca == 1:
-                    total+=25
+                    total += 25
                 else:
                     continue
             elif opcao == 3:
                 print("Bolo de rolo diminui 50 de fome")
-                bolo = int(input("Deseja dar cuscuz? [0 - NÃO / 1 - SIM]: "))
+                try:
+                    bolo = int(input("Deseja dar cuscuz? [0 - NÃO / 1 - SIM]: "))
+                except ValueError:
+                    print("Entrada inválida. Digite 0 para NÃO ou 1 para SIM.")
+                    continue
+                    
                 if bolo == 1:
-                    total+=50
+                    total += 50
                 else:
                     continue
         else:
-           print("Nao alimentando...")
+            print("Nao alimentando...")
+        
         if total == 0:
             print("\nSem... Forças....")
             time.sleep(2)
@@ -51,10 +81,9 @@ def alimentar():
             time.sleep(2)
             print("\nBichinho morreu.")
             break
-        
-    #atual = arquivo.write(total)
-    #decorrer = str(decorrer)
-    #atual = arquivo.write(decorrer)
-    #arquivo.close()
+    alimentar.close()
 
-alimentar()
+try:
+    alimentar()
+except Exception as e:
+    print("Ocorreu um erro:", str(e))
